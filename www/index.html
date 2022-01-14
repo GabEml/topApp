@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+            * Enable inline JS: add 'unsafe-inline' to default-src
+        -->
+        <link rel="manifest" href="manifest.json" />
+        <script>
+          window.addEventListener("load", () => {
+            if ("serviceWorker" in navigator) {
+              navigator.serviceWorker
+                .register("sw.js", { scope: "./" })
+                .then(function (reg) {});
+            }
+          });
+        </script>
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!--<meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'"/>-->
+        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover"/>
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+        <script>
+          var OneSignal = window.OneSignal || [];
+          var initConfig = {
+            appId: "ee227e60-28fb-4dc7-9a05-49b35145c939",
+            notifyButton: {
+              enable: true,
+            },
+          };
+          OneSignal.push(function () {
+            OneSignal.SERVICE_WORKER_PARAM = { scope: "push/onesignal/" };
+            OneSignal.SERVICE_WORKER_PATH = "push/onesignal/OneSignalSDKWorker.js";
+            OneSignal.SERVICE_WORKER_UPDATER_PATH = "push/onesignal/OneSignalSDKUpdaterWorker.js";
+            OneSignal.init(initConfig);
+          });
+        </script>
+        <title>Top App</title>
+    </head>
+    <body>
+      <h1>Top 10 pays ou la population est la plus heureuse</h1>
+      <div class="containerList" id="list"></div>
+      <script src="cordova.js"></script>
+      <script src="js/index.js"></script>
+      <script src="js/display.js"></script>
+    </body>
+</html>
